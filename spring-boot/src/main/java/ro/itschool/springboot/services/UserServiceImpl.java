@@ -15,12 +15,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO createUser(UserDTO userDTO) {
-        if (userDTO.getAge() < 18 || userDTO.getAge() > 120) {
-            log.error("Invalid age.");
-        } else {
-            userDTOList.add(userDTO);
-            log.info("User created: " + userDTO.getName());
-            return userDTO;
+        userDTOList.add(userDTO);
+        log.info("User created: " + userDTO.getName());
+        return userDTO;
+    }
+
+    @Override
+    public UserDTO updateUser(UserDTO userDTO) {
+        for (int index = 0; index < userDTOList.size(); index++) {
+            if (userDTOList.get(index).getName().equalsIgnoreCase(userDTO.getName())) {
+                userDTOList.get(index).setEmail(userDTO.getEmail().toLowerCase());
+                userDTOList.get(index).setAge(userDTO.getAge());
+                log.info("User updated: " + userDTOList.get(index).getName());
+                return userDTOList.get(index);
+            }
         }
         return null;
     }
