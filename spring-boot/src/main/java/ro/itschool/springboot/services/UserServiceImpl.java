@@ -40,6 +40,7 @@ public class UserServiceImpl implements UserService {
         savedUsers.forEach(user -> {
             savedUsersDTO.add(objectMapper.convertValue(user, UserDTO.class));
         });
+
         return savedUsersDTO;
     }
 
