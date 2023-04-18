@@ -1,5 +1,10 @@
 package ro.itschool.springboot.controllers;
 
+import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ro.itschool.springboot.models.dtos.UserDTO;
 import ro.itschool.springboot.services.UserService;
@@ -7,6 +12,7 @@ import ro.itschool.springboot.services.UserService;
 import java.util.List;
 
 @RestController
+@Validated
 public class UserController {
 
     private final UserService userService;
@@ -16,8 +22,13 @@ public class UserController {
     }
 
     @PostMapping("/api/users")
-    public UserDTO createUser(@RequestBody UserDTO userDTO) {
+    public UserDTO createUser(@RequestBody @Valid UserDTO userDTO) {
         return userService.createUser(userDTO);
+    }
+
+    @PutMapping("/api/users")
+    public ResponseEntity<UserDTO> updateUser(@RequestBody @Valid UserDTO userDTO) {
+        return ResponseEntity.ok(userService.updateUser(userDTO));
     }
 
     @GetMapping("/api/users")
