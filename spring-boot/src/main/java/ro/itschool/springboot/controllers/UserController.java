@@ -1,8 +1,5 @@
 package ro.itschool.springboot.controllers;
 
-import jakarta.validation.Valid;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -22,12 +19,12 @@ public class UserController {
     }
 
     @PostMapping("/api/users")
-    public UserDTO createUser(@RequestBody @Valid UserDTO userDTO) {
+    public UserDTO createUser(@RequestBody UserDTO userDTO) {
         return userService.createUser(userDTO);
     }
 
     @PutMapping("/api/users")
-    public ResponseEntity<UserDTO> updateUser(@RequestBody @Valid UserDTO userDTO) {
+    public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO) {
         return ResponseEntity.ok(userService.updateUser(userDTO));
     }
 
