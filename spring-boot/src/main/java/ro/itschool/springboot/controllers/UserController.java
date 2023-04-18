@@ -25,8 +25,8 @@ public class UserController {
         return userService.getUsers();
     }
 
-    @DeleteMapping("/api/users/{name}")
-    public UserDTO deleteUserByName(@PathVariable String name) {
-        return userService.deleteUserByName(name);
+    @DeleteMapping("/api/users/{id}")
+    public void deleteUserById(@PathVariable long id) {
+        userService.deleteUserById(id);
     }
 }
