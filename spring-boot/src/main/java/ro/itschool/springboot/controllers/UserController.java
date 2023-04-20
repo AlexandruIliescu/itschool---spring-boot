@@ -1,8 +1,10 @@
 package ro.itschool.springboot.controllers;
 
+import jakarta.validation.constraints.NotNull;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ro.itschool.springboot.models.dtos.OrderDTO;
 import ro.itschool.springboot.models.dtos.UserDTO;
 import ro.itschool.springboot.services.UserService;
 
@@ -36,5 +38,10 @@ public class UserController {
     @DeleteMapping("/api/users/{id}")
     public void deleteUserById(@PathVariable long id) {
         userService.deleteUserById(id);
+    }
+
+    @PostMapping("/api/{userId}/orders")
+    public ResponseEntity<OrderDTO> createOrderByUserId(@PathVariable @NotNull Long userId, @RequestBody OrderDTO orderDTO) {
+        return ResponseEntity.ok(userService.createOrder(userId, orderDTO));
     }
 }
