@@ -21,13 +21,13 @@ public class UserController {
     }
 
     @PostMapping("/api/users")
-    public UserDTO createUser(@RequestBody UserDTO userDTO) {
-        return userService.createUser(userDTO);
+    public  ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
+        return ResponseEntity.ok(userService.createUser(userDTO));
     }
 
-    @PutMapping("/api/users")
-    public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO) {
-        return ResponseEntity.ok(userService.updateUser(userDTO));
+    @PutMapping("/api/users/{userId}")
+    public ResponseEntity<UserDTO> updateUserById(@PathVariable Long userId, @RequestBody UserDTO userDTO) {
+        return ResponseEntity.ok(userService.updateUserById(userId, userDTO));
     }
 
     @GetMapping("/api/users")

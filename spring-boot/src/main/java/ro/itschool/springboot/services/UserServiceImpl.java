@@ -3,6 +3,8 @@ package ro.itschool.springboot.services;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import ro.itschool.springboot.exceptions.UserCreateException;
+import ro.itschool.springboot.exceptions.UserNotFoundException;
 import ro.itschool.springboot.models.dtos.OrderDTO;
 import ro.itschool.springboot.models.dtos.UserDTO;
 import ro.itschool.springboot.models.entities.Order;
@@ -31,12 +33,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO createUser(UserDTO userDTO) {
+        if (!userDTO.getEmail().contains("@")) {
+            throw new UserCreateException("Invalid email format.");
+        }
         User userToSave = objectMapper.convertValue(userDTO, User.class);
         //save user to the database test
         User userSaved = userRepository.save(userToSave);
-        UserDTO userSavedDTO = objectMapper.convertValue(userSaved, UserDTO.class);
 
-        return userSavedDTO;
+        return objectMapper.convertValue(userSaved, UserDTO.class);
     }
 
     @Override
@@ -56,14 +60,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO updateUser(UserDTO userDTO) {
-        return null;
+    public UserDTO updateUserById(Long userId, UserDTO userDTO) {
+        User userFound = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User not found."));
+
+        return userDTO;
     }
 
     @Override
     public OrderDTO createOrder(Long userId, OrderDTO orderDTO) {
         //check if user by userId exists
-        User userFound = userRepository.findById(userId).orElseThrow();
+        User userFound = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User not found."));
         Order order = objectMapper.convertValue(orderDTO, Order.class);
         //set user on order
         order.setUser(userFound);
