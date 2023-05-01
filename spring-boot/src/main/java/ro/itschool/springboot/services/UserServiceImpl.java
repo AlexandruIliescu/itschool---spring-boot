@@ -47,9 +47,7 @@ public class UserServiceImpl implements UserService {
     public List<UserDTO> getUsers() {
         List<User> savedUsers = userRepository.findAll();
         List<UserDTO> savedUsersDTO = new ArrayList<>();
-        savedUsers.forEach(user -> {
-            savedUsersDTO.add(objectMapper.convertValue(user, UserDTO.class));
-        });
+        savedUsers.forEach(user -> savedUsersDTO.add(objectMapper.convertValue(user, UserDTO.class)));
 
         return savedUsersDTO;
     }
@@ -61,9 +59,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO updateUserById(Long userId, UserDTO userDTO) {
-        User userFound = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User not found."));
-
-        return userDTO;
+        return objectMapper.convertValue(userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User not found.")), UserDTO.class);
     }
 
     @Override
