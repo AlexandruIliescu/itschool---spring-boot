@@ -1,6 +1,6 @@
 package ro.itschool.springboot.controllers;
 
-import jakarta.validation.constraints.NotNull;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -41,7 +41,7 @@ public class UserController {
     }
 
     @PostMapping("/api/{userId}/orders")
-    public ResponseEntity<OrderDTO> createOrderByUserId(@PathVariable @NotNull Long userId, @RequestBody OrderDTO orderDTO) {
+    public ResponseEntity<OrderDTO> createOrderByUserId(@PathVariable Long userId, @RequestBody OrderDTO orderDTO) {
         return ResponseEntity.ok(userService.createOrder(userId, orderDTO));
     }
 }
