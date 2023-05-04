@@ -21,7 +21,7 @@ public class UserController {
     }
 
     @PostMapping("/api/users")
-    public  ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
         return ResponseEntity.ok(userService.createUser(userDTO));
     }
 
@@ -31,8 +31,8 @@ public class UserController {
     }
 
     @GetMapping("/api/users")
-    public List<UserDTO> getUsers() {
-        return userService.getUsers();
+    public ResponseEntity<List<UserDTO>> getUsers() {
+        return ResponseEntity.ok(userService.getUsers());
     }
 
     @DeleteMapping("/api/users/{id}")
